@@ -44,3 +44,8 @@ class gestureLibrary(wx.Frame):
                 self.relaxers.append(rospy.ServiceProxy(name+'/relax', Relax))
             else:
                 self.relaxers.append(None)
+ 
+app = wx.PySimpleApp()
+frame = wx.Frame(None, title='Hello World')
+frame.Show()
+app.MainLoop()
