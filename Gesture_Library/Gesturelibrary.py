@@ -33,7 +33,7 @@ class gestureLibrary(wx.Frame):
         self.publishers = list()
         self.relaxers = list()
 
- joints = rospy.get_param('/arbotix/joints', dict())
+ 	joints = rospy.get_param('/arbotix/joints', dict())
         # create publishers
         for name in sorted(joints.keys()):
             # pull angles
