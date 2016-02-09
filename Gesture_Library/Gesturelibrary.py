@@ -24,6 +24,23 @@ from arbotix_python.joints import*
 
 class gestureLibrary(wx.Frame):
 	
-	s = 'Hello World'
 	print wx.version() 
+	joint_defaults = getJointsFromURDF()
+        
+        i = 0
+        dynamixels = rospy.get_param('/arbotix/dynamixels', dict())
+        self.servos = list()
+        self.publishers = list()
+        self.relaxers = list()
 
+ joints = rospy.get_param('/arbotix/joints', dict())
+        # create publishers
+        for name in sorted(joints.keys()):
+            # pull angles
+            min_angle, max_angle = getJointLimits(name, joint_defaults)
+            # create publisher
+            self.publishers.append(rospy.Publisher(name+'/command', Float64, queue_size=5))
+            if rospy.get_param('/arbotix/joints/'+name+'/type','dynamixel') == 'dynamixel':
+                self.relaxers.append(rospy.ServiceProxy(name+'/relax', Relax))
+            else:
+                self.relaxers.append(None)
