@@ -25,5 +25,5 @@ from arbotix_python.joints import*
 class gestureLibrary(wx.Frame):
 	
 	s = 'Hello World'
-	print s 
+	print wx.version() 
 

@@ -23,6 +23,7 @@ from arbotix_python.joints import*
 
 
 class gestureLibrary(wx.Frame):
-s = 'Hello World'
-print s 
+	
+	s = 'Hello World'
+	print s 
 
