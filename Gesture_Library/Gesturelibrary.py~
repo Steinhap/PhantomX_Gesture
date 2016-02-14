@@ -26,7 +26,6 @@ class gestureLibrary(wx.Frame):
 	
 	print wx.version() 
 	joint_defaults = getJointsFromURDF()
-        
         i = 0
         dynamixels = rospy.get_param('/arbotix/dynamixels', dict())
         self.servos = list()
@@ -45,7 +44,11 @@ class gestureLibrary(wx.Frame):
             else:
                 self.relaxers.append(None)
  
-app = wx.PySimpleApp()
-frame = wx.Frame(None, title='Hello World')
-frame.Show()
-app.MainLoop()
+
+
+
+if __name__ == '__main__':
+	app = wx.PySimpleApp()
+	frame = wx.Frame(None, title='Hello World')
+	frame.Show()
+	app.MainLoop()
