@@ -1,17 +1,11 @@
 #!/usr/bin/env python
 
 """
-A simple interface which can perform a series of poses 
+A node which subscribes to the armGesture topic of type ./ 
 with the PhantomX_Reactor arm
-
 By: Phillip Steinhart
-
 """
-
-
-
 import rospy
-import wx 
 
 from math import radians 
 
@@ -22,27 +16,31 @@ from arbotix_msgs.srv import Relax
 from arbotix_python.joints import*
 
 
-class gestureLibrary(wx.Frame):
-	def __init__(self, parent, debug= false):
-		print wx.version() 
-		joint_defaults = getJointsFromURDF()
-        	i = 0
-        	dynamixels = rospy.get_param('/arbotix/dynamixels', dict())
-        	self.servos = list()
-        	self.publishers = list()
-        	self.relaxers = list()
+class gestureLibrary():
+	
+	def __init__(self):
+        self.t_delta = rospy.Duration(1.0/rospy.get_param("~diagnostic_rate", 1.0))
+        self.t_next = rospy.Time.now() + self.t_delta
+        self.pub = rospy.Publisher('diagnostics', DiagnosticArray, queue_size=5)
 
- 		joints = rospy.get_param('/arbotix/joints', dict())
-        	# create publishers
-        	for name in sorted(joints.keys()):
-        	    # pull angles
-         	   min_angle, max_angle = getJointLimits(name, joint_defaults)
-         	   # create publisher
-          	  self.publishers.append(rospy.Publisher(name+'/command', Float64, queue_size=5))
-           	 if rospy.get_param('/arbotix/joints/'+name+'/type','dynamixel') == 'dynamixel':
-                	self.relaxers.append(rospy.ServiceProxy(name+'/relax', Relax))
-            	else:
-             	   self.relaxers.append(None)
+ 	def sendGesture(self, joints, controllers):
+        """ Publish diagnostics. """    
+        now = rospy.Time.now()
+        if now > self.t_next:
+            # create message
+            msg = DiagnosticArray()
+            msg.header.stamp = now
+            for controller in controllers:
+                d = controller.getDiagnostics()
+                if d:
+                    msg.status.append(d)
+            for joint in joints:
+                d = joint.getDiagnostics()
+                if d:
+                    msg.status.append(d)
+            # publish and update stats
+            self.pub.publish(msg)
+            self.t_next = now + self.t_delta
  
 
 
