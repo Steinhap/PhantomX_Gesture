@@ -239,51 +239,6 @@ int main(int argc, char **argv)
 	servos = (servo*) malloc(dynamixels.size() * sizeof(servo));
 	init_servos_db(dynamixels, n_private);
 
-
-	//Declare the necessary topics
-	if(controller == phidget) 
-	{
-	  //Set the position of the servo. Use for phidgetServo and corobot_ssc32
-		position_pub = n.advertise<corobot_msgs::ServoPosition>("setPositionServo", 100); 
-		
-		//Set the type of servos. PhidgetServo needs it.
-		type_pub = n.advertise<corobot_msgs::ServoType>("phidgetServo_setType", 100); 
-
-		corobot_msgs::ServoType typeMsg;
-	}
-	else if (controller == ssc32)
-	{
-	  //Set the position of the servo. Use for phidgetServo and corobot_ssc32
-		position_pub = n.advertise<corobot_msgs::ServoPosition>("setPositionServo", 100); 
-	}
-
-
-	if(controller == phidget || controller == ssc32)
-	{ 
-		//Make sure that the arm is in the default initial position for non arbotix arms (wrist horizontal, gripper open and shoulder and elbow angle at 0)
-		corobot_msgs::ServoPosition msg;
-
-		ros::spinOnce();
-		//We wait 2s to make sure that the node PhidgetServo has already subscribed to the topic
-		ros::Rate loop_rate(0.5);  
-		loop_rate.sleep();
-
-    //we initialize the servos
-		for (int i=0; i<number_servo; i++) 
-		{
-			msg.index = servos[i].id;
-			if(servos[i].type == base_rotation)
-				msg.position = 90;
-			else if (servos[i].type == wrist_rotation)
-				msg.position = 90;
-			else if (servos[i].type == wrist_flex)
-				msg.position = 90;
-			else
-				msg.position = 0;
-			position_pub.publish(msg);
-		}
-	}
-
         ros::spin();
 	
 	free(servos);
