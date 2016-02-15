@@ -56,8 +56,6 @@ servo * servos = NULL;
 //number of connected servos
 int number_servo = 0; 
 
-//which servo controller id used?
-hardware_controller controller; 
 
 //table of publishers, as we need one publisher per servo for the arbotix controller.
 ros::Publisher * arbotix_publisher = NULL; 
@@ -231,8 +229,7 @@ int main(int argc, char **argv)
 
 	//Read the type of arm we are controlling
 
-		controller = arbotix;
-			//set the size of the table
+		//set the size of the table
 		arbotix_publisher = new ros::Publisher[dynamixels.size()];
 	
 	//Read information about the servos
