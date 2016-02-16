@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python
 
 """ 
@@ -27,7 +26,6 @@
   ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
-import roslib; roslib.load_manifest('arbotix_python')
 import rospy
 import wx
 
@@ -37,7 +35,7 @@ from geometry_msgs.msg import Twist
 from sensor_msgs.msg import JointState
 from std_msgs.msg import Float64
 from arbotix_msgs.srv import Relax
-from arbotix_python.servos import *
+from arbotix_python.joints import *
 
 width = 325
 
@@ -80,7 +78,7 @@ class controllerGUI(wx.Frame):
         self.turn = 0
         self.X = 0
         self.Y = 0
-        self.cmd_vel = rospy.Publisher('cmd_vel', Twist)
+        self.cmd_vel = rospy.Publisher('cmd_vel', Twist, queue_size=5)
 
         # Move Servos
         servo = wx.StaticBox(self, -1, 'Move Servos')
@@ -88,7 +86,7 @@ class controllerGUI(wx.Frame):
         servoBox = wx.StaticBoxSizer(servo,orient=wx.VERTICAL) 
         servoSizer = wx.GridBagSizer(5,5)
 
-        joint_defaults = getServosFromURDF()
+        joint_defaults = getJointsFromURDF()
         
         i = 0
         dynamixels = rospy.get_param("/arbotix/dynamixels", dict())
@@ -106,7 +104,7 @@ class controllerGUI(wx.Frame):
             # pull angles
             min_angle, max_angle = getServoLimits(name, joint_defaults)
             # create publisher
-            self.publishers.append(rospy.Publisher(name+'/command', Float64))
+            self.publishers.append(rospy.Publisher(name+'/command', Float64, queue_size=5))
             self.relaxers.append(rospy.ServiceProxy(name+'/relax', Relax))
             # create slider
             s = servoSlider(self, min_angle, max_angle, name, i)
