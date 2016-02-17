@@ -157,7 +157,7 @@ class controllerGUI(wx.Frame):
 
     def stateCb(self, msg):
     	rate = rospy.Rate(10) # 10hz
-         while not rospy.is_shutdown():
+        while not rospy.is_shutdown():
            hello_str = "hello world %s" % rospy.get_time()
            rospy.loginfo(hello_str)
            pub1.publish(5)
