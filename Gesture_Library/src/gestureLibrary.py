@@ -33,6 +33,7 @@ from math import radians
 
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import JointState
+from std_msgs.msg import String
 from std_msgs.msg import Float64
 from arbotix_msgs.srv import Relax
 from arbotix_python.joints import *
