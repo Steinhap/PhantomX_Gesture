@@ -217,7 +217,7 @@ class controllerGUI(wx.Frame):
 
 if __name__ == '__main__':
     # initialize GUI
-    rospy.init_node('controllerGUI')
+    rospy.init_node('gestureLibrary')
     app = wx.PySimpleApp()
     frame = controllerGUI(None, True)
     app.MainLoop()
