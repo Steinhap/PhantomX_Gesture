@@ -91,16 +91,15 @@ class controllerGUI(wx.Frame):
         
         i = 0
         dynamixels = rospy.get_param("/arbotix/dynamixels", dict())
-        pub1 = rospy.Publisher('arm_elbow_flex_joint_right/command', Float64, queue_size=5)
-        pub2 = rospy.Publisher('arm_elbow_flex_joint_left/command', Float64, queue_size=5)
+       
 	
         self.servos = list()
         self.publishers = list()
         self.relaxers = list()
-
 	self.synched = list()
 
-     
+        self.publishers.append(rospy.Publisher('arm_elbow_flex_joint_right/command', Float64, queue_size=5))
+        self.publishers.append(rospy.Publisher('arm_elbow_flex_joint_left/command', Float64, queue_size=5))
 
 
 	# create sliders and publishers
@@ -156,12 +155,11 @@ class controllerGUI(wx.Frame):
             self.relaxers[servo]()
 
     def stateCb(self, msg):
-    	rate = rospy.Rate(10) # 10hz
-        while not rospy.is_shutdown():
-           pub1.publish(5)
-           pub2.publish(5)
-           rate.sleep()
-
+    	for p in zip(self.publishers):
+                d = Float64()
+                d.data = 15
+                p.publish(d)
+   
     def onPaint(self, event=None):
         # this is the wx drawing surface/canvas
         dc = wx.PaintDC(self.movebase)
