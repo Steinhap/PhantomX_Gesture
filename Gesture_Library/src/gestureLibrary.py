@@ -99,8 +99,8 @@ class controllerGUI(wx.Frame):
 
 	self.synched = list()
 
-        self.publishers.append(rospy.Publisher('arm_elbow_flex_joint_right/command', Float64, queue_size=5))
-        self.publishers.append(rospy.Publisher('arm_elbow_flex_joint_left/command', Float64, queue_size=5))
+       pub1 = rospy.Publisher('arm_elbow_flex_joint_right/command', Float64, queue_size=5)
+       pub2 = rospy.Publisher('arm_elbow_flex_joint_left/command', Float64, queue_size=5)
 
 
 	# create sliders and publishers
@@ -155,9 +155,14 @@ class controllerGUI(wx.Frame):
             self.servos[servo].position.Disable()
             self.relaxers[servo]()
 
-    def stateCb(self, msg):        
-        for p in self.publishers:
-            p.publish(5);
+    def stateCb(self, msg):
+    	rate = rospy.Rate(10) # 10hz
+         while not rospy.is_shutdown():
+           hello_str = "hello world %s" % rospy.get_time()
+           rospy.loginfo(hello_str)
+           pub1.publish(5)
+           pub2.publish(5)
+           rate.sleep()
 
     def onPaint(self, event=None):
         # this is the wx drawing surface/canvas
