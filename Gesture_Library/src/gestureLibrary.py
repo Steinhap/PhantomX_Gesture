@@ -91,8 +91,9 @@ class controllerGUI(wx.Frame):
         
         i = 0
         dynamixels = rospy.get_param("/arbotix/dynamixels", dict())
+        pub1 = rospy.Publisher('arm_elbow_flex_joint_right/command', Float64, queue_size=5)
+        pub2 = rospy.Publisher('arm_elbow_flex_joint_left/command', Float64, queue_size=5)
 	
-
         self.servos = list()
         self.publishers = list()
         self.relaxers = list()
@@ -155,8 +156,6 @@ class controllerGUI(wx.Frame):
             self.relaxers[servo]()
 
     def stateCb(self, msg):
-    	pub1 = rospy.Publisher('arm_elbow_flex_joint_right/command', Float64, queue_size=5)
-        pub2 = rospy.Publisher('arm_elbow_flex_joint_left/command', Float64, queue_size=5)
     	rate = rospy.Rate(10) # 10hz
         while not rospy.is_shutdown():
            pub1.publish(5)
