@@ -98,7 +98,10 @@ class controllerGUI(wx.Frame):
 
 	self.synched = list()
 
-        
+        self.publishers.append(rospy.Publisher(arm_elbow_flex_joint_right'/command', Float64, queue_size=5))
+        self.publishers.append(rospy.Publisher(arm_elbow_flex_joint_left'/command', Float64, queue_size=5))
+
+
 	# create sliders and publishers
         for name in sorted(dynamixels.keys()):
             # pull angles
@@ -123,7 +126,7 @@ class controllerGUI(wx.Frame):
         sizer.Add(servoBox, (0,1), wx.GBSpan(1,1), wx.EXPAND|wx.TOP|wx.BOTTOM|wx.RIGHT,5)
         self.Bind(wx.EVT_CHECKBOX, self.enableSliders)
         # now we can subscribe
-        rospy.Subscriber('joint_states', JointState, self.stateCb)
+        rospy.Subscriber('armGesture', String, self.stateCb)
 
         # timer for output
         self.timer = wx.Timer(self, self.TIMER_ID)
@@ -152,13 +155,8 @@ class controllerGUI(wx.Frame):
             self.relaxers[servo]()
 
     def stateCb(self, msg):        
-        for servo in self.servos:
-            if not servo.enabled.IsChecked():
-                try:
-                    idx = msg.name.index(servo.name)
-                    servo.setPosition(msg.position[idx])
-                except: 
-                    pass
+        for p in self.publishers:
+            p.publish(5);
 
     def onPaint(self, event=None):
         # this is the wx drawing surface/canvas
