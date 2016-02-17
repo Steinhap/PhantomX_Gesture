@@ -155,8 +155,8 @@ class controllerGUI(wx.Frame):
             self.relaxers[servo]()
 
     def stateCb(self, msg):
-    	self.pub1 = rospy.Publisher('arm_elbow_flex_joint_right/command', Float64, queue_size=5)
-        self.pub2 = rospy.Publisher('arm_elbow_flex_joint_left/command', Float64, queue_size=5)
+    	pub1 = rospy.Publisher('arm_elbow_flex_joint_right/command', Float64, queue_size=5)
+        pub2 = rospy.Publisher('arm_elbow_flex_joint_left/command', Float64, queue_size=5)
         d = Float64()
         d.data = 15
         pub1.publish(d)
