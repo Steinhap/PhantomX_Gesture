@@ -98,8 +98,8 @@ class controllerGUI(wx.Frame):
 
 	self.synched = list()
 
-        self.publishers.append(rospy.Publisher(arm_elbow_flex_joint_right'/command', Float64, queue_size=5))
-        self.publishers.append(rospy.Publisher(arm_elbow_flex_joint_left'/command', Float64, queue_size=5))
+        self.publishers.append(rospy.Publisher('arm_elbow_flex_joint_right/command', Float64, queue_size=5))
+        self.publishers.append(rospy.Publisher('arm_elbow_flex_joint_left/command', Float64, queue_size=5))
 
 
 	# create sliders and publishers
