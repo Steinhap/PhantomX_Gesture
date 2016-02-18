@@ -58,7 +58,7 @@ class servoSlider():
         return self.position.GetValue()/100.0
 
 class controllerGUI(wx.Frame):
-    TIMER_ID = 100
+    TIMER_ID = 1000
 
     def __init__(self, parent, debug = False):  
         wx.Frame.__init__(self, parent, -1, "ArbotiX Controller GUI", style = wx.DEFAULT_FRAME_STYLE & ~ (wx.RESIZE_BORDER | wx.MAXIMIZE_BOX))
@@ -100,12 +100,12 @@ class controllerGUI(wx.Frame):
 	self.synched = list()
 
 
-
-
+      	
+        joints = rospy.get_param('/arbotix/joints', dict())
 	# create sliders and publishers
-        for name in sorted(dynamixels.keys()):
+        for name in sorted(joints.keys()):
             # pull angles
-            min_angle, max_angle = getServoLimits(name, joint_defaults)
+            min_angle, max_angle = getJointLimits(name, joint_defaults)
             # create publisher
             self.publishers.append(rospy.Publisher(name+'/command', Float64, queue_size=5))
             self.relaxers.append(rospy.ServiceProxy(name+'/relax', Relax))
@@ -115,7 +115,7 @@ class controllerGUI(wx.Frame):
             servoSizer.Add(s.position,(i,1), wx.GBSpan(1,1),wx.ALIGN_CENTER_VERTICAL)
 
 	    #check for synch
-	    synch = rospy.get_param("/arbotix/dynamixels/"+name+"/synched", -1)
+	    synch = rospy.get_param("/arbotix/joints/"+name+"/synched", -1)
 	    s.synched = int(synch)
 
             self.servos.append(s)
@@ -158,7 +158,7 @@ class controllerGUI(wx.Frame):
     	pub1 = rospy.Publisher('arm_elbow_flex_joint_right/command', Float64, queue_size=5)
         pub2 = rospy.Publisher('arm_elbow_flex_joint_left/command', Float64, queue_size=5)
         d = Float64()
-        d.data = 15
+        d.data = 0.0
         pub1.publish(d)
         pub2.publish(d)
    
