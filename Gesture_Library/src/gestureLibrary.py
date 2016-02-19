@@ -61,7 +61,7 @@ class controllerGUI(wx.Frame):
     TIMER_ID = 1000
 
     def __init__(self, parent, debug = False):  
-        wx.Frame.__init__(self, parent, -1, "ArbotiX Controller GUI", style = wx.DEFAULT_FRAME_STYLE & ~ (wx.RESIZE_BORDER | wx.MAXIMIZE_BOX))
+        wx.Frame.__init__(self, parent, -1, "Gesture Library GUI", style = wx.DEFAULT_FRAME_STYLE & ~ (wx.RESIZE_BORDER | wx.MAXIMIZE_BOX))
         sizer = wx.GridBagSizer(5,5)
 
         # Move Base
@@ -156,7 +156,7 @@ class controllerGUI(wx.Frame):
 
     def stateCb(self, msg):
     	 # send joint update
-
+	pub1 = rospy.Publisher(
 	#store info the servo pairs
 	shoulder_lift = 0
 	elbow_flex = 0
@@ -201,23 +201,23 @@ class controllerGUI(wx.Frame):
         
 
     def onTimer(self, event=None):
-        # send joint update
+##        # send joint update
 
 	#store info the servo pairs
-	shoulder_lift = 0
-	elbow_flex = 0
+##	shoulder_lift = 0
+##	elbow_flex = 0
 
 	#set synched servo values
-	for s in self.servos:
-		if s.synched != -1:
-			s.setPosition(self.servos[s.synched].getPosition()*-1)
+##	for s in self.servos:
+##		if s.synched != -1:
+##			s.setPosition(self.servos[s.synched].getPosition()*-1)
 
-        for s,p in zip(self.servos,self.publishers):
-            if s.enabled.IsChecked():
-                d = Float64()
-                d.data = s.getPosition()
+  ##      for s,p in zip(self.servos,self.publishers):
+    ##        if s.enabled.IsChecked():
+      ##          d = Float64()
+        ##        d.data = s.getPosition()
 
-                p.publish(d)
+          ##      p.publish(d)
 		
         # send base updates
         t = Twist()
