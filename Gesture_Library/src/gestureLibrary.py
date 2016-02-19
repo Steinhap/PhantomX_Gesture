@@ -155,12 +155,23 @@ class controllerGUI(wx.Frame):
             self.relaxers[servo]()
 
     def stateCb(self, msg):
-    	pub1 = rospy.Publisher('arm_elbow_flex_joint_right/command', Float64, queue_size=5)
-        pub2 = rospy.Publisher('arm_elbow_flex_joint_left/command', Float64, queue_size=5)
-        d = Float64()
-        d.data = 0.0
-        pub1.publish(d)
-        pub2.publish(d)
+    	 # send joint update
+
+	#store info the servo pairs
+	shoulder_lift = 0
+	elbow_flex = 0
+
+	#set synched servo values
+	for s in self.servos:
+		if s.synched != -1:
+			s.setPosition(self.servos[s.synched].getPosition()*-1)
+
+        for s,p in zip(self.servos,self.publishers):
+            if s.enabled.IsChecked():
+                d = Float64()
+                d.data = s.getPosition()
+
+                p.publish(d)
    
     def onPaint(self, event=None):
         # this is the wx drawing surface/canvas
