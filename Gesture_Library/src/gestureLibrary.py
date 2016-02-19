@@ -156,7 +156,6 @@ class controllerGUI(wx.Frame):
 
     def stateCb(self, msg):
     	 # send joint update
-	pub1 = rospy.Publisher(
 	#store info the servo pairs
 	shoulder_lift = 0
 	elbow_flex = 0
