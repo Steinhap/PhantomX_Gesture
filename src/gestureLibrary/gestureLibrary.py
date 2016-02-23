@@ -148,7 +148,7 @@ class controllerGUI(wx.Frame):
     	
 	shoulder_lift = 0
 	elbow_flex = 0
-	if msg.lower() in ["wave"]
+	if msg.lower() in ["wave"]:
 		
 		arm_shldr_r.publish(1.0)
 		arm_shldr_l.publish(-1.0)
