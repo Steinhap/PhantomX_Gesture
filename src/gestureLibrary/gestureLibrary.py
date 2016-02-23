@@ -3,7 +3,7 @@
 """ 
   This Node will subsrcibes to the /armGesture topic of type std_msgs/String
   
-  The current commands that have been implemented are "Point left" and "Point forward"
+  The current commands that have been implemented are "Wave" and "Point left"
 """
 
 import rospy
@@ -132,6 +132,11 @@ class controllerGUI(wx.Frame):
             self.servos[servo].position.Disable()
             self.relaxers[servo]()
 
+
+    def moveHome(self, event=None):
+    	for p in zip(self.publishers):
+                p.publish(0.0)
+
     def stateCb(self, msg):
     	arm_elbow_r= rospy.Publisher('arm_elbow_flex_joint_right/command', Float64, queue_size=5)
     	arm_elbow_l= rospy.Publisher('arm_elbow_flex_joint_left/command', Float64, queue_size=5)
@@ -140,13 +145,17 @@ class controllerGUI(wx.Frame):
     	wrist_flx= rospy.Publisher('arm_wrist_flex_joint/command', Float64, queue_size=5)
     	gripper= rospy.Publisher('gripper_joint/command', Float64, queue_size=5)
     	arm_shldr_pan= rospy.Publisher('arm_shoulder_pan_joint/command', Float64, queue_size = 5)
-    	for p in zip(self.publishers):
-                p.publish(0.0)
     	
 	shoulder_lift = 0
 	elbow_flex = 0
-	if msg.lower() in ["point forward", "point straight"]
-		arm_shldr_r.publish(1.0)	
+	if msg.lower() in ["wave"]
+		
+		arm_shldr_r.publish(1.0)
+		arm_shldr_l.publish(-1.0)
+		
+		arm_shldr_r.publish(-1.0)
+		arm_shldr_l.publish(1.0)
+		self.moveHome()
 
    
     def onPaint(self, event=None):
@@ -176,7 +185,6 @@ class controllerGUI(wx.Frame):
         self.onPaint()          
         
 
-    def onTimer(self, event=None):
     	
 
 if __name__ == '__main__':
