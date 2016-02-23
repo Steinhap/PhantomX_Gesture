@@ -145,13 +145,10 @@ class controllerGUI(wx.Frame):
 #                p.publish(0.0)
 
     def stateCb(self, msg):
-	shoulder_lift = 0
-	elbow_flex = 0
-	if msg == "wave":
-		self.arm_shldr_r.publish(1.0)
-		self.arm_shldr_l.publish(-1.0)
-		self.arm_shldr_r.publish(-1.0)
-		self.arm_shldr_l.publish(1.0)
+	self.arm_shldr_r.publish(1.0)
+	self.arm_shldr_l.publish(-1.0)
+	self.arm_shldr_r.publish(-1.0)
+	self.arm_shldr_l.publish(1.0)
 	#	self.moveHome()
 
    
