@@ -8,6 +8,7 @@
 
 import rospy
 import wx
+import time
 
 from math import radians
 
@@ -148,6 +149,13 @@ class controllerGUI(wx.Frame):
     	
 	arm_shldr_r.publish(1.0)
 	arm_shldr_l.publish(-1.0)
+	time.sleep(3)
+	arm_shldr_r.publish(-1.0)
+	arm_shldr_l.publish(1.0)
+	time.sleep(3)
+	arm_shldr_r.publish(1.0)
+	arm_shldr_l.publish(-1.0)
+	time.sleep(3)
 	arm_shldr_r.publish(-1.0)
 	arm_shldr_l.publish(1.0)
 	#	self.moveHome()
