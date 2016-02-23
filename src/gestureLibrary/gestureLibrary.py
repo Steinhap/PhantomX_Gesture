@@ -106,6 +106,13 @@ class controllerGUI(wx.Frame):
         self.Bind(wx.EVT_CHECKBOX, self.enableSliders)
         # now we can subscribe
         rospy.Subscriber('armGesture', String, self.stateCb)
+        arm_elbow_r= rospy.Publisher('/arm_elbow_flex_joint_right/command', Float64, queue_size=5)
+    	arm_elbow_l= rospy.Publisher('/arm_elbow_flex_joint_left/command', Float64, queue_size=5)
+    	arm_shldr_l= rospy.Publisher('/arm_shoulder_lift_joint_left/command', Float64, queue_size=5)
+    	arm_shldr_r= rospy.Publisher('/arm_shoulder_lift_joint_right/command', Float64, queue_size=5)
+    	wrist_flx= rospy.Publisher('/arm_wrist_flex_joint/command', Float64, queue_size=5)
+    	gripper= rospy.Publisher('/gripper_joint/command', Float64, queue_size=5)
+    	arm_shldr_pan= rospy.Publisher('/arm_shoulder_pan_joint/command', Float64, queue_size = 5)
 
         # timer for output
         self.timer = wx.Timer(self, self.TIMER_ID)
@@ -138,21 +145,13 @@ class controllerGUI(wx.Frame):
 #                p.publish(0.0)
 
     def stateCb(self, msg):
-    	arm_elbow_r= rospy.Publisher('/arm_elbow_flex_joint_right/command', Float64, queue_size=5)
-    	arm_elbow_l= rospy.Publisher('/arm_elbow_flex_joint_left/command', Float64, queue_size=5)
-    	arm_shldr_l= rospy.Publisher('/arm_shoulder_lift_joint_left/command', Float64, queue_size=5)
-    	arm_shldr_r= rospy.Publisher('/arm_shoulder_lift_joint_right/command', Float64, queue_size=5)
-    	wrist_flx= rospy.Publisher('/arm_wrist_flex_joint/command', Float64, queue_size=5)
-    	gripper= rospy.Publisher('/gripper_joint/command', Float64, queue_size=5)
-    	arm_shldr_pan= rospy.Publisher('/arm_shoulder_pan_joint/command', Float64, queue_size = 5)
-    	
 	shoulder_lift = 0
 	elbow_flex = 0
 	if msg == "wave":
-		arm_shldr_r.publish(1.0)
-		arm_shldr_l.publish(-1.0)
-		arm_shldr_r.publish(-1.0)
-		arm_shldr_l.publish(1.0)
+		self.arm_shldr_r.publish(1.0)
+		self.arm_shldr_l.publish(-1.0)
+		self.arm_shldr_r.publish(-1.0)
+		self.arm_shldr_l.publish(1.0)
 	#	self.moveHome()
 
    
