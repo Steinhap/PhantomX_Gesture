@@ -1,29 +1,9 @@
 #!/usr/bin/env python
 
 """ 
-  A simple Controller GUI to drive robots and pose heads.
-  Copyright (c) 2008-2011 Michael E. Ferguson.  All right reserved.
-  Redistribution and use in source and binary forms, with or without
-  modification, are permitted provided that the following conditions are met:
-      * Redistributions of source code must retain the above copyright
-        notice, this list of conditions and the following disclaimer.
-      * Redistributions in binary form must reproduce the above copyright
-        notice, this list of conditions and the following disclaimer in the
-        documentation and/or other materials provided with the distribution.
-      * Neither the name of Vanadium Labs LLC nor the names of its 
-        contributors may be used to endorse or promote products derived 
-        from this software without specific prior written permission.
+  This Node will subsrcibes to the /armGesture topic of type std_msgs/String
   
-  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-  DISCLAIMED. IN NO EVENT SHALL VANADIUM LABS BE LIABLE FOR ANY DIRECT, INDIRECT,
-  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
-  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-  OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  The current commands that have been implemented are "Point left" and "Point forward"
 """
 
 import rospy
@@ -61,7 +41,7 @@ class controllerGUI(wx.Frame):
     TIMER_ID = 1000
 
     def __init__(self, parent, debug = False):  
-        wx.Frame.__init__(self, parent, -1, "Gesture Library GUI", style = wx.DEFAULT_FRAME_STYLE & ~ (wx.RESIZE_BORDER | wx.MAXIMIZE_BOX))
+        wx.Frame.__init__(self, parent, -1, "Gesture Library ", style = wx.DEFAULT_FRAME_STYLE & ~ (wx.RESIZE_BORDER | wx.MAXIMIZE_BOX))
         sizer = wx.GridBagSizer(5,5)
 
         # Move Base
@@ -79,7 +59,6 @@ class controllerGUI(wx.Frame):
         self.turn = 0
         self.X = 0
         self.Y = 0
-        self.cmd_vel = rospy.Publisher('cmd_vel', Twist, queue_size=5)
 
         # Move Servos
         servo = wx.StaticBox(self, -1, 'Move Servos')
@@ -132,7 +111,6 @@ class controllerGUI(wx.Frame):
         self.timer = wx.Timer(self, self.TIMER_ID)
         self.timer.Start(50)
         wx.EVT_CLOSE(self, self.onClose)
-        wx.EVT_TIMER(self, self.TIMER_ID, self.onTimer)
 
         # bind the panel to the paint event
         wx.EVT_PAINT(self, self.onPaint)
@@ -155,22 +133,21 @@ class controllerGUI(wx.Frame):
             self.relaxers[servo]()
 
     def stateCb(self, msg):
-    	 # send joint update
-	#store info the servo pairs
+    	arm_elbow_r= rospy.Publisher('arm_elbow_flex_joint_right/command', Float64, queue_size=5)
+    	arm_elbow_l= rospy.Publisher('arm_elbow_flex_joint_left/command', Float64, queue_size=5)
+    	arm_shldr_l= rospy.Publisher('arm_shoulder_lift_joint_left/command', Float64, queue_size=5)
+    	arm_shldr_r= rospy.Publisher('arm_shoulder_lift_joint_right/command', Float64, queue_size=5)
+    	wrist_flx= rospy.Publisher('arm_wrist_flex_joint/command', Float64, queue_size=5)
+    	gripper= rospy.Publisher('gripper_joint/command', Float64, queue_size=5)
+    	arm_shldr_pan= rospy.Publisher('arm_shoulder_pan_joint/command', Float64, queue_size = 5)
+    	for p in zip(self.publishers):
+                p.publish(0.0)
+    	
 	shoulder_lift = 0
 	elbow_flex = 0
+	if msg.lower() in ["point forward", "point straight"]
+		arm_shldr_r.publish(1.0)	
 
-	#set synched servo values
-	for s in self.servos:
-		if s.synched != -1:
-			s.setPosition(self.servos[s.synched].getPosition()*-1)
-
-        for s,p in zip(self.servos,self.publishers):
-            if s.enabled.IsChecked():
-                d = Float64()
-                d.data = s.getPosition()
-
-                p.publish(d)
    
     def onPaint(self, event=None):
         # this is the wx drawing surface/canvas
@@ -200,32 +177,7 @@ class controllerGUI(wx.Frame):
         
 
     def onTimer(self, event=None):
-##        # send joint update
-
-	#store info the servo pairs
-##	shoulder_lift = 0
-##	elbow_flex = 0
-
-	#set synched servo values
-##	for s in self.servos:
-##		if s.synched != -1:
-##			s.setPosition(self.servos[s.synched].getPosition()*-1)
-
-  ##      for s,p in zip(self.servos,self.publishers):
-    ##        if s.enabled.IsChecked():
-      ##          d = Float64()
-        ##        d.data = s.getPosition()
-
-          ##      p.publish(d)
-		
-        # send base updates
-        t = Twist()
-        t.linear.x = self.forward/150.0; t.linear.y = 0; t.linear.z = 0
-        if self.forward > 0:
-            t.angular.x = 0; t.angular.y = 0; t.angular.z = -self.turn/50.0
-        else:
-            t.angular.x = 0; t.angular.y = 0; t.angular.z = self.turn/50.0
-        self.cmd_vel.publish(t)
+    	
 
 if __name__ == '__main__':
     # initialize GUI
