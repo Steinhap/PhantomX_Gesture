@@ -143,6 +143,10 @@ class controllerGUI(wx.Frame):
 		time.sleep(1)
 		arm_elbow_r.publish(-1.0)
 		arm_elbow_l.publish(1.0)
+		time.sleep(1)
+		arm_elbow_r.publish(0.0)
+		arm_elbow_l.publish(0.0)
+		
 	if msg.data in ["point left", "Point Left"]:
 		arm_shldr_pan.publish(-.75)
 		
