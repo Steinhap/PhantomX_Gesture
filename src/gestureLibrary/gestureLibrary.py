@@ -72,7 +72,7 @@ class controllerGUI(wx.Frame):
 	arm_shldr_l.publish(0.0) 
 	arm_shldr_r.publish(0.0) 
 	wrist_flx.publish(0.0) 
-	arm_shldr_pan.(1.04) 
+	arm_shldr_pan.publish(1.04) 
         
 
         # Move Servos
