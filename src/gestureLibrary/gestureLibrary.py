@@ -67,7 +67,12 @@ class controllerGUI(wx.Frame):
         self.turn = 0
         self.X = 0
         self.Y = 0
-        
+        arm_elbow_r.publish(0.0)
+	arm_elbow_l.publish(0.0)
+	arm_shldr_l.publish(0.0) 
+	arm_shldr_r.publish(0.0) 
+	wrist_flx.publish(0.0) 
+	arm_shldr_pan.(1.04) 
         
 
         # Move Servos
@@ -89,26 +94,7 @@ class controllerGUI(wx.Frame):
 	self.synched = list()
 
 
-      	
-        joints = rospy.get_param('/arbotix/joints', dict())
-	# create sliders and publishers
-        for name in sorted(joints.keys()):
-            # pull angles
-            min_angle, max_angle = getJointLimits(name, joint_defaults)
-            # create publisher
-            self.publishers.append(rospy.Publisher(name+'/command', Float64, queue_size=5))
-            self.relaxers.append(rospy.ServiceProxy(name+'/relax', Relax))
-            # create slider
-            s = servoSlider(self, min_angle, max_angle, name, i)
-            servoSizer.Add(s.enabled,(i,0), wx.GBSpan(1,1),wx.ALIGN_CENTER_VERTICAL)   
-            servoSizer.Add(s.position,(i,1), wx.GBSpan(1,1),wx.ALIGN_CENTER_VERTICAL)
-
-	    #check for synch
-	    synch = rospy.get_param("/arbotix/joints/"+name+"/synched", -1)
-	    s.synched = int(synch)
-
-            self.servos.append(s)
-            i += 1
+      
 	    
         # add everything
         servoBox.Add(servoSizer) 
