@@ -146,19 +146,19 @@ class controllerGUI(wx.Frame):
     	wrist_flx= rospy.Publisher('/arm_wrist_flex_joint/command', Float64, queue_size=5)
     	gripper= rospy.Publisher('/gripper_joint/command', Float64, queue_size=5)
     	arm_shldr_pan= rospy.Publisher('/arm_shoulder_pan_joint/command', Float64, queue_size = 5)
-    	
-	arm_shldr_r.publish(1.0)
-	arm_shldr_l.publish(-1.0)
-	time.sleep(3)
-	arm_shldr_r.publish(-1.0)
-	arm_shldr_l.publish(1.0)
-	time.sleep(3)
-	arm_shldr_r.publish(1.0)
-	arm_shldr_l.publish(-1.0)
-	time.sleep(3)
-	arm_shldr_r.publish(-1.0)
-	arm_shldr_l.publish(1.0)
-	self.moveHome()
+    	if msg.data in ["wave", "Wave"]:
+		arm_shldr_r.publish(1.0)
+		arm_shldr_l.publish(-1.0)
+		time.sleep(3)
+		arm_shldr_r.publish(-1.0)
+		arm_shldr_l.publish(1.0)
+		time.sleep(3)
+		arm_shldr_r.publish(1.0)
+		arm_shldr_l.publish(-1.0)
+		time.sleep(3)
+		arm_shldr_r.publish(-1.0)
+		arm_shldr_l.publish(1.0)
+		self.moveHome()
 
    
     def onPaint(self, event=None):
