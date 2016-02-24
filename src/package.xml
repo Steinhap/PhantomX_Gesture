@@ -9,10 +9,7 @@
   <buildtool_depend>catkin</buildtool_depend>
   
   
-  <build_depend>arbotix_controllers</build_depend>
-  <build_depend>arbotix_python</build_depend>
-  
-  
+  <run_depend>rospy</run_depend>
   <run_depend>arbotix_controllers</run_depend>
   <run_depend>arbotix_python</run_depend>
 
