@@ -60,6 +60,14 @@ class controllerGUI(wx.Frame):
         self.turn = 0
         self.X = 0
         self.Y = 0
+        
+        arm_elbow_r= rospy.Publisher('/arm_elbow_flex_joint_right/command', Float64, queue_size=5)
+    	arm_elbow_l= rospy.Publisher('/arm_elbow_flex_joint_left/command', Float64, queue_size=5)
+    	arm_shldr_l= rospy.Publisher('/arm_shoulder_lift_joint_left/command', Float64, queue_size=5)
+    	arm_shldr_r= rospy.Publisher('/arm_shoulder_lift_joint_right/command', Float64, queue_size=5)
+    	wrist_flx= rospy.Publisher('/arm_wrist_flex_joint/command', Float64, queue_size=5)
+    	gripper= rospy.Publisher('/gripper_joint/command', Float64, queue_size=5)
+    	arm_shldr_pan= rospy.Publisher('/arm_shoulder_pan_joint/command', Float64, queue_size = 5)
 
         # Move Servos
         servo = wx.StaticBox(self, -1, 'Move Servos')
@@ -135,24 +143,17 @@ class controllerGUI(wx.Frame):
 
 
     def stateCb(self, msg):
-    	arm_elbow_r= rospy.Publisher('/arm_elbow_flex_joint_right/command', Float64, queue_size=5)
-    	arm_elbow_l= rospy.Publisher('/arm_elbow_flex_joint_left/command', Float64, queue_size=5)
-    	arm_shldr_l= rospy.Publisher('/arm_shoulder_lift_joint_left/command', Float64, queue_size=5)
-    	arm_shldr_r= rospy.Publisher('/arm_shoulder_lift_joint_right/command', Float64, queue_size=5)
-    	wrist_flx= rospy.Publisher('/arm_wrist_flex_joint/command', Float64, queue_size=5)
-    	gripper= rospy.Publisher('/gripper_joint/command', Float64, queue_size=5)
-    	arm_shldr_pan= rospy.Publisher('/arm_shoulder_pan_joint/command', Float64, queue_size = 5)
     	
     	if msg.data in ["wave", "Wave"]:
 		arm_shldr_r.publish(1.0)
 		arm_shldr_l.publish(-1.0)
-		time.sleep(3)
+		time.sleep(1)
 		arm_shldr_r.publish(-1.0)
 		arm_shldr_l.publish(1.0)
-		time.sleep(3)
+		time.sleep(1)
 		arm_shldr_r.publish(1.0)
 		arm_shldr_l.publish(-1.0)
-		time.sleep(3)
+		time.sleep(1)
 		arm_shldr_r.publish(-1.0)
 		arm_shldr_l.publish(1.0)
 	if msg.data in ["point left", "Point Left"]:
