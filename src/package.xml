@@ -2,9 +2,6 @@
   <name>Gesture_Library</name>
   <version>1.0.0</version>
   <description>The Gesture_Library package</description>
-<description>
-  A Library of Gestures built for the PhantomX Reactor arm 
-</description>
   <author>Phillip Steinhart</author>
   <maintainer email="Steinhap@union.edu">Phillip Steinhart</maintainer>
   <license>BFG</license>
