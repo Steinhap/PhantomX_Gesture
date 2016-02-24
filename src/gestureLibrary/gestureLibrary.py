@@ -87,7 +87,7 @@ class controllerGUI(wx.Frame):
             # pull angles
             min_angle, max_angle = getJointLimits(name, joint_defaults)
             # create publisher
-#           self.publishers.append(rospy.Publisher(name+'/command', Float64, queue_size=5))
+           self.publishers.append(rospy.Publisher(name+'/command', Float64, queue_size=5))
             self.relaxers.append(rospy.ServiceProxy(name+'/relax', Relax))
             # create slider
             s = servoSlider(self, min_angle, max_angle, name, i)
@@ -134,9 +134,9 @@ class controllerGUI(wx.Frame):
             self.relaxers[servo]()
 
 
-#    def moveHome(self, event=None):
-#    	for p in zip(self.publishers):
-#                p.publish(0.0)
+    def moveHome(self, event=None):
+    	for p in zip(self.publishers):
+                p.publish(0.0)
 
     def stateCb(self, msg):
     	arm_elbow_r= rospy.Publisher('/arm_elbow_flex_joint_right/command', Float64, queue_size=5)
@@ -158,7 +158,7 @@ class controllerGUI(wx.Frame):
 	time.sleep(3)
 	arm_shldr_r.publish(-1.0)
 	arm_shldr_l.publish(1.0)
-	#	self.moveHome()
+	self.moveHome()
 
    
     def onPaint(self, event=None):
