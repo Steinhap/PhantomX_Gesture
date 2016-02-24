@@ -1,0 +1,8 @@
+prefix=/home/viki/PhantomX_Gesture/devel
+
+Name: Gesture_Library
+Description: Description of Gesture_Library
+Version: 1.0.0
+Cflags: 
+Libs: -L/home/viki/PhantomX_Gesture/devel/lib 
+Requires: 
