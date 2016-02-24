@@ -146,21 +146,22 @@ class controllerGUI(wx.Frame):
     def stateCb(self, msg):
     	
     	if msg.data in ["wave", "Wave"]:
-		arm_shldr_r.publish(1.0)
-		arm_shldr_l.publish(-1.0)
+		arm_elbow_r.publish(1.0)
+		arm_elbow_l.publish(-1.0)
 		time.sleep(1)
-		arm_shldr_r.publish(-1.0)
-		arm_shldr_l.publish(1.0)
+		arm_elbow_r.publish(-1.0)
+		arm_elbow_l.publish(1.0)
 		time.sleep(1)
-		arm_shldr_r.publish(1.0)
-		arm_shldr_l.publish(-1.0)
+		arm_elbow_r.publish(1.0)
+		arm_elbow_l.publish(-1.0)
 		time.sleep(1)
-		arm_shldr_r.publish(-1.0)
-		arm_shldr_l.publish(1.0)
+		arm_elbow_r.publish(-1.0)
+		arm_elbow_l.publish(1.0)
 	if msg.data in ["point left", "Point Left"]:
-		arm_shldr_pan.publish(-1.0)
-		arm_shldr_r.publish(1.0)
-		arm_shldr_l.publish(-1.0)
+		arm_shldr_pan.publish(-.75)
+		
+		arm_shldr_r.publish(-1.0)
+		arm_shldr_l.publish(1.0)
 
    
     def onPaint(self, event=None):
