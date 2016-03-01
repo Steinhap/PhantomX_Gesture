@@ -33,14 +33,14 @@ gsture_pub = rospy.Publisher('/armGesture', String, queue_size = 5)
 class controllerGUI(wx.Frame):
     TIMER_ID = 1000
 
-    def __init__(self, parent, debug = False):  
+    def __init__(self):  
        	wx.Frame.__init__(self, None, wx.ID_ANY, 'Gesture Library', pos=(300, 150), size=(320, 250))
        	sizer = wx.GridBagSizer(5,5)
 
         self.button1 = wx.Button(self, id=-1, label='Wave', pos=(8, 8), size=(175, 28))
         self.button1.Bind(wx.EVT_BUTTON, self.button1Click)
         
-        self.button2 = wx.Button(self, id=-1, label='Button2', pos=(8, 38), size=(175, 28))
+        self.button2 = wx.Button(self, id=-1, label='Point Left', pos=(8, 38), size=(175, 28))
         self.button2.Bind(wx.EVT_BUTTON, self.button2Click)
         
         arm_elbow_r.publish(0.0)
@@ -70,6 +70,9 @@ class controllerGUI(wx.Frame):
         self.timer = wx.Timer(self, self.TIMER_ID)
         self.timer.Start(50)
         wx.EVT_CLOSE(self, self.onClose)
+        sizer.Add(button1, (0,1), wx.GBSpan(1,1), wx.EXPAND|wx.TOP|wx.BOTTOM|wx.RIGHT,5)
+        sizer.Add(button2, (0,1), wx.GBSpan(1,1), wx.EXPAND|wx.TOP|wx.BOTTOM|wx.RIGHT,5)
+
 
         self.SetSizerAndFit(sizer)
         self.Show(True)
