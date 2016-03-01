@@ -117,7 +117,7 @@ class controllerGUI(wx.Frame):
     def button3Click(self, event):
     	gsture_pub.publish("Point Right")
   
-    def button3Click(self, event):
+    def button4Click(self, event):
     	gsture_pub.publish("Point up")
 
         
