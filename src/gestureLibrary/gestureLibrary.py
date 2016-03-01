@@ -38,11 +38,11 @@ class controllerGUI(wx.Frame):
        	sizer = wx.GridBagSizer(5,5)
        	panel = wx.Panel(self, wx.ID_ANY)
 
-        button1 = wx.Button(panel, id=-1, label='Wave', pos=(8, 8), size=(175, 28))
+        self.button1 = wx.Button(panel, id=-1, label='Wave', pos=(8, 8), size=(175, 28))
         self.button1.Bind(wx.EVT_BUTTON, self.button1Click)
         
-        button2 = wx.Button(panel, id=-1, label='Point Left', pos=(8, 38), size=(175, 28))
-        button2.Bind(wx.EVT_BUTTON, self.button2Click)
+        self.button2 = wx.Button(panel, id=-1, label='Point Left', pos=(8, 38), size=(175, 28))
+        self.button2.Bind(wx.EVT_BUTTON, self.button2Click)
         
         arm_elbow_r.publish(0.0)
 	arm_elbow_l.publish(0.0)
@@ -71,9 +71,6 @@ class controllerGUI(wx.Frame):
         self.timer = wx.Timer(self, self.TIMER_ID)
         self.timer.Start(50)
         wx.EVT_CLOSE(self, self.onClose)
-        sizer.Add(button1, (0,1), wx.GBSpan(1,1), wx.EXPAND|wx.TOP|wx.BOTTOM|wx.RIGHT,5)
-        sizer.Add(button2, (0,1), wx.GBSpan(1,1), wx.EXPAND|wx.TOP|wx.BOTTOM|wx.RIGHT,5)
-
 
         self.SetSizerAndFit(sizer)
         self.Show(True)
