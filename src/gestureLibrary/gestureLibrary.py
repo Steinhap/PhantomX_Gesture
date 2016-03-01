@@ -51,12 +51,6 @@ class controllerGUI(wx.Frame):
 	arm_shldr_pan.publish(1.04) 
         
 
-        # Move Servos
-        servo = wx.StaticBox(self, -1, 'Move Servos')
-        servo.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD))
-        servoBox = wx.StaticBoxSizer(servo,orient=wx.VERTICAL) 
-        servoSizer = wx.GridBagSizer(5,5)
-
         joint_defaults = getJointsFromURDF()
         
         i = 0
@@ -69,10 +63,6 @@ class controllerGUI(wx.Frame):
         
 	self.synched = list()
 	    
-        # add everything
-        servoBox.Add(servoSizer) 
-        sizer.Add(servoBox, (0,1), wx.GBSpan(1,1), wx.EXPAND|wx.TOP|wx.BOTTOM|wx.RIGHT,5)
-        self.Bind(wx.EVT_CHECKBOX, self.enableSliders)
         # now we can subscribe
         rospy.Subscriber('armGesture', String, self.stateCb)
 
