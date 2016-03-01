@@ -27,6 +27,7 @@ arm_shldr_r= rospy.Publisher('/arm_shoulder_lift_joint_right/command', Float64, 
 wrist_flx= rospy.Publisher('/arm_wrist_flex_joint/command', Float64, queue_size=5)
 gripper= rospy.Publisher('/gripper_joint/command', Float64, queue_size=5)
 arm_shldr_pan= rospy.Publisher('/arm_shoulder_pan_joint/command', Float64, queue_size = 5)
+gsture_pub = rospy.Publisher('/armGesture', String, queue_size = 5)
 
 class servoSlider():
     def __init__(self, parent, min_angle, max_angle, name, i):
@@ -67,6 +68,10 @@ class controllerGUI(wx.Frame):
         self.turn = 0
         self.X = 0
         self.Y = 0
+        self.button1 = wx.Button(self, id=-1, label='Wave',
+            pos=(8, 8), size=(175, 28))
+        self.button1.Bind(wx.EVT_BUTTON, self.button1Click)
+        
         arm_elbow_r.publish(0.0)
 	arm_elbow_l.publish(0.0)
 	arm_shldr_l.publish(0.0) 
@@ -92,9 +97,6 @@ class controllerGUI(wx.Frame):
         self.relaxers = list()
         
 	self.synched = list()
-
-
-      
 	    
         # add everything
         servoBox.Add(servoSizer) 
@@ -153,6 +155,8 @@ class controllerGUI(wx.Frame):
 		arm_shldr_r.publish(-1.0)
 		arm_shldr_l.publish(1.0)
 
+    def button1Click(self,event):
+    	gsture_pub.publish("Wave")
    
     def onPaint(self, event=None):
         # this is the wx drawing surface/canvas
