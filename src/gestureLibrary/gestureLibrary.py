@@ -34,9 +34,9 @@ class controllerGUI(wx.Frame):
     TIMER_ID = 1000
 
     def __init__(self, parent, debug= False):  
-       	wx.Frame.__init__(self, None, wx.ID_ANY, 'Gesture Library', pos=(300, 150), size=(320, 250))
+        wx.Frame.__init__(self, parent, -1, "Gesture Library", style = wx.DEFAULT_FRAME_STYLE & ~ (wx.RESIZE_BORDER | wx.MAXIMIZE_BOX))
        	sizer = wx.GridBagSizer(5,5)
-       	panel = wx.Panel(self, wx.ID_ANY)
+        self.panel = wx.Panel(self,size=(width,width-20))
 
         self.button1 = wx.Button(panel, id=-1, label='Wave', pos=(8, 8), size=(175, 28))
         self.button1.Bind(wx.EVT_BUTTON, self.button1Click)
@@ -44,6 +44,9 @@ class controllerGUI(wx.Frame):
         self.button2 = wx.Button(panel, id=-1, label='Point Left', pos=(8, 38), size=(175, 28))
         self.button2.Bind(wx.EVT_BUTTON, self.button2Click)
         
+        
+        sizer.Add(panel,(0,0),wx.GBSpan(1,1),wx.EXPAND|wx.TOP|wx.BOTTOM|wx.LEFT,5)
+
         arm_elbow_r.publish(0.0)
 	arm_elbow_l.publish(0.0)
 	arm_shldr_l.publish(0.0) 
