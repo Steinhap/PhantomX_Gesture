@@ -1,4 +1,4 @@
-# PhantomX_Gesture
+# Gesture Library
 A Library of Gestures for the PhantomX Reactor arm
 
 ##Using the Gesture Library
