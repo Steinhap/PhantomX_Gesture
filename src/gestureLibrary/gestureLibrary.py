@@ -44,10 +44,10 @@ class controllerGUI(wx.Frame):
         self.button2 = wx.Button(panel, id=-1, label='Point Left', pos=(8, 38), size=(175, 28))
         self.button2.Bind(wx.EVT_BUTTON, self.button2Click)
         
-        self.button3 = wx.Button(self, id=-1, label='Point Right', pos=(8, 68), size=(175, 28))
+        self.button3 = wx.Button(panel, id=-1, label='Point Right', pos=(8, 68), size=(175, 28))
         self.button3.Bind(wx.EVT_BUTTON, self.button3Click)
         
-        self.button4 = wx.Button(self, id=-1, label='Point Up', pos=(8, 98), size=(175, 28))
+        self.button4 = wx.Button(panel, id=-1, label='Point Up', pos=(8, 98), size=(175, 28))
         self.button4.Bind(wx.EVT_BUTTON, self.button4Click)
         
         sizer.Add(panel,(0,0),wx.GBSpan(1,1),wx.EXPAND|wx.TOP|wx.BOTTOM|wx.LEFT,5)
