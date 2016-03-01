@@ -44,6 +44,11 @@ class controllerGUI(wx.Frame):
         self.button2 = wx.Button(panel, id=-1, label='Point Left', pos=(8, 38), size=(175, 28))
         self.button2.Bind(wx.EVT_BUTTON, self.button2Click)
         
+        self.button3 = wx.Button(self, id=-1, label='Point Right', pos=(8, 68), size=(175, 28))
+        self.button3.Bind(wx.EVT_BUTTON, self.button3Click)
+        
+        self.button4 = wx.Button(self, id=-1, label='Point Up', pos=(8, 98), size=(175, 28))
+        self.button4.Bind(wx.EVT_BUTTON, self.button4Click)
         
         sizer.Add(panel,(0,0),wx.GBSpan(1,1),wx.EXPAND|wx.TOP|wx.BOTTOM|wx.LEFT,5)
 
@@ -54,18 +59,6 @@ class controllerGUI(wx.Frame):
 	wrist_flx.publish(0.0) 
 	arm_shldr_pan.publish(1.04) 
         
-
-        joint_defaults = getJointsFromURDF()
-        
-        i = 0
-        dynamixels = rospy.get_param("/arbotix/dynamixels", dict())
-       
-	
-        self.servos = list()
-        self.publishers = list()
-        self.relaxers = list()
-        
-	self.synched = list()
 	    
         # now we can subscribe
         rospy.Subscriber('armGesture', String, self.stateCb)
@@ -118,10 +111,11 @@ class controllerGUI(wx.Frame):
     def button1Click(self,event):
     	gsture_pub.publish("Wave")
     	
-    	
     def button2Click(self, event):
     	gsture_pub.publish("Point Left")
     	
+    def button3Click(self, event):
+    	gsture_pub.publish("Point Right")
         
 
     	
