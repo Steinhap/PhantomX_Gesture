@@ -34,7 +34,7 @@ class controllerGUI(wx.Frame):
     TIMER_ID = 1000
 
     def __init__(self, parent, debug = False):  
-       wx.Frame.__init__(self, None, wx.ID_ANY, 'Gesture Library', pos=(300, 150), size=(320, 250))
+       	wx.Frame.__init__(self, None, wx.ID_ANY, 'Gesture Library', pos=(300, 150), size=(320, 250))
 
         self.button1 = wx.Button(self, id=-1, label='Wave', pos=(8, 8), size=(175, 28))
         self.button1.Bind(wx.EVT_BUTTON, self.button1Click)
