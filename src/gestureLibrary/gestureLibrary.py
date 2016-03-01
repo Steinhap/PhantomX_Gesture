@@ -36,12 +36,13 @@ class controllerGUI(wx.Frame):
     def __init__(self, parent, debug= False):  
        	wx.Frame.__init__(self, None, wx.ID_ANY, 'Gesture Library', pos=(300, 150), size=(320, 250))
        	sizer = wx.GridBagSizer(5,5)
+       	panel = wx.Panel(self, wx.ID_ANY)
 
-        self.button1 = wx.Button(self, id=-1, label='Wave', pos=(8, 8), size=(175, 28))
+        button1 = wx.Button(panel, id=-1, label='Wave', pos=(8, 8), size=(175, 28))
         self.button1.Bind(wx.EVT_BUTTON, self.button1Click)
         
-        self.button2 = wx.Button(self, id=-1, label='Point Left', pos=(8, 38), size=(175, 28))
-        self.button2.Bind(wx.EVT_BUTTON, self.button2Click)
+        button2 = wx.Button(panel, id=-1, label='Point Left', pos=(8, 38), size=(175, 28))
+        button2.Bind(wx.EVT_BUTTON, self.button2Click)
         
         arm_elbow_r.publish(0.0)
 	arm_elbow_l.publish(0.0)
