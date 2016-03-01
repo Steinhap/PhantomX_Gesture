@@ -36,7 +36,7 @@ class controllerGUI(wx.Frame):
     def __init__(self, parent, debug= False):  
         wx.Frame.__init__(self, parent, -1, "Gesture Library", style = wx.DEFAULT_FRAME_STYLE & ~ (wx.RESIZE_BORDER | wx.MAXIMIZE_BOX))
        	sizer = wx.GridBagSizer(5,5)
-        self.panel = wx.Panel(self,size=(width,width-20))
+        panel = wx.Panel(self,size=(width,width-20))
 
         self.button1 = wx.Button(panel, id=-1, label='Wave', pos=(8, 8), size=(175, 28))
         self.button1.Bind(wx.EVT_BUTTON, self.button1Click)
