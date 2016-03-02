@@ -20,6 +20,7 @@ from arbotix_msgs.srv import Relax
 from arbotix_python.joints import *
 
 width = 325
+#Publisher for each servo motor in arm
 arm_elbow_r= rospy.Publisher('/arm_elbow_flex_joint_right/command', Float64, queue_size=5)
 arm_elbow_l= rospy.Publisher('/arm_elbow_flex_joint_left/command', Float64, queue_size=5)
 arm_shldr_l= rospy.Publisher('/arm_shoulder_lift_joint_left/command', Float64, queue_size=5)
@@ -27,6 +28,8 @@ arm_shldr_r= rospy.Publisher('/arm_shoulder_lift_joint_right/command', Float64, 
 wrist_flex= rospy.Publisher('/arm_wrist_flex_joint/command', Float64, queue_size=5)
 gripper= rospy.Publisher('/gripper_joint/command', Float64, queue_size=5)
 arm_shldr_pan= rospy.Publisher('/arm_shoulder_pan_joint/command', Float64, queue_size = 5)
+
+#publisher for gestures messages for buttons
 gsture_pub = rospy.Publisher('/armGesture', String, queue_size = 5)
 
 
@@ -37,7 +40,8 @@ class controllerGUI(wx.Frame):
         wx.Frame.__init__(self, parent, -1, "Gesture Library", style = wx.DEFAULT_FRAME_STYLE & ~ (wx.RESIZE_BORDER | wx.MAXIMIZE_BOX))
        	sizer = wx.GridBagSizer(5,5)
         panel = wx.Panel(self,size=(320,250))
-
+	
+	#Aesthetically pleasing buttons to send Gesture 
         self.button1 = wx.Button(panel, id=-1, label='Wave', pos=(8, 8), size=(175, 28))
         self.button1.Bind(wx.EVT_BUTTON, self.button1Click)
         
@@ -51,7 +55,8 @@ class controllerGUI(wx.Frame):
         self.button4.Bind(wx.EVT_BUTTON, self.button4Click)
         
         sizer.Add(panel,(0,0),wx.GBSpan(1,1),wx.EXPAND|wx.TOP|wx.BOTTOM|wx.LEFT,5)
-
+	
+	#Move Everything to center position, except gripper
         arm_elbow_r.publish(0.0)
 	arm_elbow_l.publish(0.0)
 	arm_shldr_l.publish(0.0) 
@@ -59,13 +64,9 @@ class controllerGUI(wx.Frame):
 	wrist_flex.publish(0.0) 
 	arm_shldr_pan.publish(1.04) 
         
-	    
-        # now we can subscribe
-        rospy.Subscriber('armGesture', String, self.stateCb)
-
-        # timer for output
-        self.timer = wx.Timer(self, self.TIMER_ID)
-        self.timer.Start(50)
+        # now we can subscribe to gesture topic
+        rospy.Subscriber('armGesture', String, self.onCommand)
+        
         wx.EVT_CLOSE(self, self.onClose)
 
         self.SetSizerAndFit(sizer)
@@ -75,16 +76,7 @@ class controllerGUI(wx.Frame):
         self.timer.Stop()
         self.Destroy()
 
-    def enableSliders(self, event):
-        servo = event.GetId()
-        if event.IsChecked(): 
-            self.servos[servo].position.Enable()
-        else:
-            self.servos[servo].position.Disable()
-            self.relaxers[servo]()
-
-
-    def stateCb(self, msg):
+    def onCommand(self, msg):
     	
     	if msg.data.lower() in ["wave"]:
 		arm_elbow_r.publish(0.85)
@@ -142,6 +134,8 @@ class controllerGUI(wx.Frame):
 		arm_elbow_r.publish(0.0)
 		arm_elbow_l.publish(0.0)
 		
+		
+	#Functions to send Gesture message	
     def button1Click(self,event):
     	gsture_pub.publish("Wave")
     	
@@ -155,9 +149,6 @@ class controllerGUI(wx.Frame):
     	gsture_pub.publish("Point up")
 
         
-
-    	
-
 if __name__ == '__main__':
     # initialize GUI
     rospy.init_node('gestureLibrary')
