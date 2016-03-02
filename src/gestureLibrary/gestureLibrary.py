@@ -24,7 +24,7 @@ arm_elbow_r= rospy.Publisher('/arm_elbow_flex_joint_right/command', Float64, que
 arm_elbow_l= rospy.Publisher('/arm_elbow_flex_joint_left/command', Float64, queue_size=5)
 arm_shldr_l= rospy.Publisher('/arm_shoulder_lift_joint_left/command', Float64, queue_size=5)
 arm_shldr_r= rospy.Publisher('/arm_shoulder_lift_joint_right/command', Float64, queue_size=5)
-wrist_flx= rospy.Publisher('/arm_wrist_flex_joint/command', Float64, queue_size=5)
+wrist_flex= rospy.Publisher('/arm_wrist_flex_joint/command', Float64, queue_size=5)
 gripper= rospy.Publisher('/gripper_joint/command', Float64, queue_size=5)
 arm_shldr_pan= rospy.Publisher('/arm_shoulder_pan_joint/command', Float64, queue_size = 5)
 gsture_pub = rospy.Publisher('/armGesture', String, queue_size = 5)
@@ -131,6 +131,15 @@ class controllerGUI(wx.Frame):
 		arm_elbow_l.publish(0.0)
 		arm_shldr_l.publish(0.0) 
 		arm_shldr_r.publish(0.0)
+	if msg.data.lower() in ["point up"]:
+		wrist_flex.publish(1.0)
+		arm_elbow_r.publish(0.5)
+		arm_elbow_l.publish(-0.5)
+		time.sleep(1)
+		wrist_flex.publish(0.0)
+		arm_elbow_r.publish(0.0)
+		arm_elbow_l.publish(00.0)
+		
 		
     def button1Click(self,event):
     	gsture_pub.publish("Wave")
