@@ -111,7 +111,7 @@ class controllerGUI(wx.Frame):
 		arm_shldr_r.publish(-0.5)
 		time.sleep(2)
 		arm_shldr_pan.publish(0.0)
-		time.sleep(1)
+		time.sleep(3)
 		arm_elbow_r.publish(0.0)
 		arm_elbow_l.publish(0.0)
 		arm_shldr_l.publish(0.0) 
