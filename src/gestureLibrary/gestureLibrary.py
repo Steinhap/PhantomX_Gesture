@@ -87,18 +87,18 @@ class controllerGUI(wx.Frame):
     def stateCb(self, msg):
     	
     	if msg.data.lower() in ["wave"]:
-		arm_elbow_r.publish(1.0)
-		arm_elbow_l.publish(-1.0)
-		time.sleep(2)
-		arm_elbow_r.publish(-1.0)
-		arm_elbow_l.publish(1.0)
-		time.sleep(2)
-		arm_elbow_r.publish(1.0)
-		arm_elbow_l.publish(-1.0)
-		time.sleep(2)
-		arm_elbow_r.publish(-1.0)
-		arm_elbow_l.publish(1.0)
-		time.sleep(2)
+		arm_elbow_r.publish(0.75)
+		arm_elbow_l.publish(-0.75)
+		time.sleep(1)
+		arm_elbow_r.publish(-0.75)
+		arm_elbow_l.publish(0.75)
+		time.sleep(1)
+		arm_elbow_r.publish(0.75)
+		arm_elbow_l.publish(-0.75)
+		time.sleep(1)
+		arm_elbow_r.publish(-0.75)
+		arm_elbow_l.publish(0.75)
+		time.sleep(1)
 		arm_elbow_r.publish(0.0)
 		arm_elbow_l.publish(0.0)
 		
@@ -110,12 +110,13 @@ class controllerGUI(wx.Frame):
 		arm_shldr_l.publish(0.5) 
 		arm_shldr_r.publish(-0.5)
 		time.sleep(2)
-		arm_shldr_pan.publish(1.04)
-		time.sleep(2)
 		arm_elbow_r.publish(0.0)
 		arm_elbow_l.publish(0.0)
 		arm_shldr_l.publish(0.0) 
 		arm_shldr_r.publish(0.0)
+		time.sleep(2)
+		arm_shldr_pan.publish(1.04)
+		
 
 	if msg.data.lower() in ["point right"]:
 		arm_shldr_pan.publish(2.04)
@@ -125,12 +126,13 @@ class controllerGUI(wx.Frame):
 		arm_shldr_l.publish(0.5) 
 		arm_shldr_r.publish(-0.5)
 		time.sleep(2)
-		arm_shldr_pan.publish(1.04)
-		time.sleep(2)
 		arm_elbow_r.publish(0.0)
 		arm_elbow_l.publish(0.0)
 		arm_shldr_l.publish(0.0) 
 		arm_shldr_r.publish(0.0)
+		time.sleep(2)
+		arm_shldr_pan.publish(1.04)
+		
 	if msg.data.lower() in ["point up"]:
 		wrist_flex.publish(1.0)
 		arm_elbow_r.publish(0.5)
