@@ -87,8 +87,8 @@ class controllerGUI(wx.Frame):
     def stateCb(self, msg):
     	
     	if msg.data.lower() in ["wave"]:
-		arm_elbow_r.publish(0.65)
-		arm_elbow_l.publish(-0.55)
+		arm_elbow_r.publish(0.85)
+		arm_elbow_l.publish(-0.85)
 		time.sleep(1)
 		arm_elbow_r.publish(-0.55)
 		arm_elbow_l.publish(0.55)
@@ -104,7 +104,7 @@ class controllerGUI(wx.Frame):
 		
 	if msg.data.lower() in ["point left"]:
 		arm_shldr_pan.publish(.04)
-		time.sleep(2)
+		time.sleep(1)
 		arm_elbow_r.publish(0.5)
 		arm_elbow_l.publish(-0.5)
 		arm_shldr_l.publish(0.5) 
@@ -120,7 +120,7 @@ class controllerGUI(wx.Frame):
 
 	if msg.data.lower() in ["point right"]:
 		arm_shldr_pan.publish(2.04)
-		time.sleep(2)
+		time.sleep(1)
 		arm_elbow_r.publish(0.5)
 		arm_elbow_l.publish(-0.5)
 		arm_shldr_l.publish(0.5) 
