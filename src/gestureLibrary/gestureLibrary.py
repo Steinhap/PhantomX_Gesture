@@ -56,7 +56,7 @@ class controllerGUI(wx.Frame):
 	arm_elbow_l.publish(0.0)
 	arm_shldr_l.publish(0.0) 
 	arm_shldr_r.publish(0.0) 
-	wrist_flx.publish(0.0) 
+	wrist_flex.publish(0.0) 
 	arm_shldr_pan.publish(1.04) 
         
 	    
