@@ -3,7 +3,7 @@
 """ 
   This Node will subsrcibes to the /armGesture topic of type std_msgs/String
   
-  The current commands that have been implemented are "Wave" and "Point left"
+  The current commands that have been implemented are "Wave" and "Point left", "Point Right" and "Point Up"
 """
 
 import rospy
@@ -103,7 +103,7 @@ class controllerGUI(wx.Frame):
 		arm_elbow_l.publish(0.0)
 		
 	if msg.data.lower() in ["point left"]:
-		arm_shldr_pan.publish(-.5)
+		arm_shldr_pan.publish(.04)
 		time.sleep(2)
 		arm_elbow_r.publish(0.5)
 		arm_elbow_l.publish(-0.5)
@@ -138,8 +138,7 @@ class controllerGUI(wx.Frame):
 		time.sleep(2)
 		wrist_flex.publish(0.0)
 		arm_elbow_r.publish(0.0)
-		arm_elbow_l.publish(00.0)
-		
+		arm_elbow_l.publish(0.0)
 		
     def button1Click(self,event):
     	gsture_pub.publish("Wave")
