@@ -87,7 +87,7 @@ class controllerGUI(wx.Frame):
     def stateCb(self, msg):
     	
     	if msg.data.lower() in ["wave"]:
-		arm_elbow_r.publish(0.55)
+		arm_elbow_r.publish(0.65)
 		arm_elbow_l.publish(-0.55)
 		time.sleep(1)
 		arm_elbow_r.publish(-0.55)
