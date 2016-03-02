@@ -105,8 +105,6 @@ class controllerGUI(wx.Frame):
 	if msg.data in ["point left", "Point Left"]:
 		arm_shldr_pan.publish(-.75)
 		
-		arm_shldr_r.publish(-1.0)
-		arm_shldr_l.publish(1.0)
 
     def button1Click(self,event):
     	gsture_pub.publish("Wave")
