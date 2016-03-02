@@ -117,7 +117,7 @@ class controllerGUI(wx.Frame):
 		arm_shldr_l.publish(0.0) 
 		arm_shldr_r.publish(0.0)
 
-	if msg.data.lower in ["point right"]:
+	if msg.data.lower() in ["point right"]:
 		arm_shldr_pan.publish(1.54)
 		time.sleep(2)
 		arm_elbow_r.publish(0.5)
