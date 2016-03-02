@@ -135,7 +135,7 @@ class controllerGUI(wx.Frame):
 		wrist_flex.publish(1.0)
 		arm_elbow_r.publish(0.5)
 		arm_elbow_l.publish(-0.5)
-		time.sleep(1)
+		time.sleep(2)
 		wrist_flex.publish(0.0)
 		arm_elbow_r.publish(0.0)
 		arm_elbow_l.publish(00.0)
