@@ -114,7 +114,7 @@ class controllerGUI(wx.Frame):
 		arm_elbow_l.publish(0.0)
 		arm_shldr_l.publish(0.0) 
 		arm_shldr_r.publish(0.0)
-		time.sleep(2)
+		time.sleep(1)
 		arm_shldr_pan.publish(1.04)
 		
 
@@ -130,7 +130,7 @@ class controllerGUI(wx.Frame):
 		arm_elbow_l.publish(0.0)
 		arm_shldr_l.publish(0.0) 
 		arm_shldr_r.publish(0.0)
-		time.sleep(2)
+		time.sleep(1)
 		arm_shldr_pan.publish(1.04)
 		
 	if msg.data.lower() in ["point up"]:
