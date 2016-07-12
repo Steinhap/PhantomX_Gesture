@@ -9,10 +9,10 @@ First source the setup file:
     
 Then Roscd into the Gesture_Library package:
 
-  roscd Gesture_Library
+    roscd Gesture_Library
   
   
 Then Roslaunch the launch file:
 
-  roslaunch Gesture_Library arm.launch
+    roslaunch Gesture_Library arm.launch
   
